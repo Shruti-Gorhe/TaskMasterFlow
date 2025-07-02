@@ -62,9 +62,9 @@ export function TaskInput() {
             <Button
               type="submit"
               disabled={isCreating || !formData.title.trim()}
-              className="px-6 py-3 bg-gradient-to-r from-mint via-sky to-lavender text-white rounded-xl hover:shadow-lg transform hover:scale-105 transition-all duration-200 font-medium animate-shimmer"
+              className="px-6 py-3 bg-gradient-to-r from-mint via-sky to-lavender text-white dark:text-white rounded-xl hover:shadow-lg transform hover:scale-105 transition-all duration-200 font-medium border border-white/20 dark:border-white/30"
             >
-              <Plus className="w-4 h-4 mr-2" />
+              <Plus className="w-4 h-4 mr-2 text-white dark:text-white" />
               {isCreating ? "Adding..." : "Add Task"}
             </Button>
           </div>
