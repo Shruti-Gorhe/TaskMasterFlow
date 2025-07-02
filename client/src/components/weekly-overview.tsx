@@ -35,11 +35,11 @@ export function WeeklyOverview({ tasks }: WeeklyOverviewProps) {
   const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
   return (
-    <Card className="shadow-lg border-gray-100">
+    <Card className="card-bloom shadow-xl border-pink-200/40 dark:border-purple-500/30">
       <CardHeader>
-        <CardTitle className="flex items-center text-lg font-semibold text-gray-800">
-          <Calendar className="w-5 h-5 text-sky mr-2" />
-          This Week
+        <CardTitle className="flex items-center text-lg font-semibold text-gray-800 dark:text-gray-100">
+          <Calendar className="w-6 h-6 text-sky mr-2 animate-float" />
+          This Week 📅
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-3">

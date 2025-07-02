@@ -19,11 +19,11 @@ export function ProgressTracker({ tasks }: ProgressTrackerProps) {
   const dailyPercentage = (dailyProgress / dailyGoal) * 100;
 
   return (
-    <Card className="shadow-lg border-gray-100">
+    <Card className="card-bloom shadow-xl border-pink-200/40 dark:border-purple-500/30">
       <CardHeader>
-        <CardTitle className="flex items-center text-lg font-semibold text-gray-800">
-          <TrendingUp className="w-5 h-5 text-mint mr-2" />
-          Today's Progress
+        <CardTitle className="flex items-center text-lg font-semibold text-gray-800 dark:text-gray-100">
+          <TrendingUp className="w-6 h-6 text-mint mr-2 animate-float" />
+          Today's Progress 📈
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">

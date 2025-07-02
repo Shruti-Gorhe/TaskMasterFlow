@@ -43,11 +43,11 @@ export function TaskInput() {
   };
 
   return (
-    <Card className="shadow-lg border-gray-100">
+    <Card className="card-bloom shadow-xl border-pink-200/40 dark:border-purple-500/30">
       <CardHeader>
-        <CardTitle className="flex items-center text-xl font-semibold text-gray-800">
-          <Plus className="w-5 h-5 text-mint mr-2" />
-          Add New Task
+        <CardTitle className="flex items-center text-xl font-semibold text-gray-800 dark:text-gray-100">
+          <Plus className="w-6 h-6 text-mint mr-2 animate-float" />
+          Add New Task 🌟
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -57,15 +57,15 @@ export function TaskInput() {
               placeholder="What needs to be done? ✨"
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              className="flex-1 px-4 py-3 border-gray-200 rounded-xl focus:ring-2 focus:ring-mint/50 focus:border-mint transition-all"
+              className="flex-1 px-4 py-3 border-pink-200/50 dark:border-purple-500/30 rounded-xl focus:ring-2 focus:ring-mint/50 focus:border-mint transition-all glass-effect"
             />
             <Button
               type="submit"
               disabled={isCreating || !formData.title.trim()}
-              className="px-6 py-3 bg-gradient-to-r from-mint to-sky text-white rounded-xl hover:shadow-lg transform hover:scale-105 transition-all duration-200 font-medium"
+              className="px-6 py-3 bg-gradient-to-r from-mint via-sky to-lavender text-white rounded-xl hover:shadow-lg transform hover:scale-105 transition-all duration-200 font-medium animate-shimmer"
             >
               <Plus className="w-4 h-4 mr-2" />
-              Add Task
+              {isCreating ? "Adding..." : "Add Task"}
             </Button>
           </div>
 
@@ -80,7 +80,7 @@ export function TaskInput() {
           <div className="flex flex-wrap gap-3">
             <Select
               value={formData.category}
-              onValueChange={(value: string) => setFormData({ ...formData, category: value })}
+              onValueChange={(value) => setFormData({ ...formData, category: value as any })}
             >
               <SelectTrigger className="px-3 py-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-lavender/50">
                 <SelectValue />
@@ -95,7 +95,7 @@ export function TaskInput() {
 
             <Select
               value={formData.priority}
-              onValueChange={(value: string) => setFormData({ ...formData, priority: value })}
+              onValueChange={(value) => setFormData({ ...formData, priority: value as any })}
             >
               <SelectTrigger className="px-3 py-2 border-gray-200 rounded-lg focus:ring-2 focus:ring-coral/50">
                 <SelectValue />

@@ -38,11 +38,11 @@ export function getPriorityColor(priority: string): string {
 export function getPriorityBadgeColor(priority: string): string {
   switch (priority) {
     case "High":
-      return "bg-red-100 text-red-700";
+      return "bg-gradient-to-r from-coral/20 to-red-200/50 text-coral border border-coral/30";
     case "Medium":
-      return "bg-yellow-100 text-yellow-700";
+      return "bg-gradient-to-r from-lemon/20 to-yellow-200/50 text-amber-700 border border-yellow-300/30";
     case "Low":
-      return "bg-green-100 text-green-700";
+      return "bg-gradient-to-r from-mint/20 to-green-200/50 text-mint border border-mint/30";
     default:
       return "bg-gray-100 text-gray-700";
   }
@@ -51,13 +51,13 @@ export function getPriorityBadgeColor(priority: string): string {
 export function getCategoryColor(category: string): string {
   switch (category) {
     case "Work":
-      return "bg-purple-100 text-purple-700";
+      return "bg-gradient-to-r from-lavender/20 to-purple-200/50 text-purple-700 border border-lavender/30";
     case "Personal":
-      return "bg-blue-100 text-blue-700";
+      return "bg-gradient-to-r from-sky/20 to-blue-200/50 text-sky border border-sky/30";
     case "Fitness":
-      return "bg-green-100 text-green-700";
+      return "bg-gradient-to-r from-mint/20 to-green-200/50 text-mint border border-mint/30";
     case "Home":
-      return "bg-yellow-100 text-yellow-700";
+      return "bg-gradient-to-r from-lemon/20 to-yellow-200/50 text-amber-700 border border-yellow-300/30";
     default:
       return "bg-gray-100 text-gray-700";
   }

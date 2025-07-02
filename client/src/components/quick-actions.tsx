@@ -45,11 +45,11 @@ export function QuickActions() {
   ];
 
   return (
-    <Card className="shadow-lg border-gray-100">
+    <Card className="card-bloom shadow-xl border-pink-200/40 dark:border-purple-500/30">
       <CardHeader>
-        <CardTitle className="flex items-center text-lg font-semibold text-gray-800">
-          <Zap className="w-5 h-5 text-lemon mr-2" />
-          Quick Actions
+        <CardTitle className="flex items-center text-lg font-semibold text-gray-800 dark:text-gray-100">
+          <Zap className="w-6 h-6 text-lemon mr-2 animate-float" />
+          Quick Actions ⚡
         </CardTitle>
       </CardHeader>
       <CardContent>

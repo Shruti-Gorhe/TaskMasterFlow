@@ -27,21 +27,21 @@ export default function Home() {
   const completedTasks = tasks.filter(task => task.completed).length;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-mint/10 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen floral-bg floral-pattern bg-gradient-to-br from-rose-50/30 via-sky-50/30 to-mint-50/30 dark:from-gray-900 dark:via-purple-900/20 dark:to-gray-900">
       {/* Header */}
-      <header className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200/50 dark:border-gray-700/50 sticky top-0 z-50">
+      <header className="card-bloom backdrop-blur-md border-b border-pink-200/30 dark:border-gray-700/50 sticky top-0 z-50 animate-shimmer">
         <div className="max-w-6xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-r from-mint to-sky rounded-xl flex items-center justify-center">
-                <ListTodo className="text-white text-lg" />
+              <div className="w-12 h-12 bg-gradient-to-r from-mint via-sky to-lavender rounded-2xl flex items-center justify-center animate-float shadow-lg">
+                <ListTodo className="text-white text-xl" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold bg-gradient-to-r from-mint to-sky bg-clip-text text-transparent">
-                  TaskFlow
+                <h1 className="text-3xl font-bold gradient-text">
+                  TaskFlow ✨
                 </h1>
-                <p className="text-sm text-slate-500 dark:text-slate-400">
-                  Stay organized, stay motivated
+                <p className="text-sm text-slate-600 dark:text-slate-300 font-medium">
+                  Stay organized, stay motivated 🌸
                 </p>
               </div>
             </div>

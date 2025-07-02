@@ -7,11 +7,11 @@ export function MotivationalQuote() {
   const { quote, isLoading, fetchNewQuote, isFetching } = useQuotes();
 
   return (
-    <Card className="shadow-lg border-gray-100 bg-gradient-to-br from-lavender/20 via-coral/20 to-lemon/20">
+    <Card className="card-bloom shadow-xl border-pink-200/40 dark:border-purple-500/30 bg-gradient-to-br from-lavender/30 via-coral/20 to-lemon/30 dark:from-purple-900/30 dark:via-pink-900/20 dark:to-yellow-900/30">
       <CardHeader>
-        <CardTitle className="flex items-center text-lg font-semibold text-gray-800">
-          <Quote className="w-5 h-5 text-lavender mr-2" />
-          Daily Motivation
+        <CardTitle className="flex items-center text-lg font-semibold text-gray-800 dark:text-gray-100">
+          <Quote className="w-6 h-6 text-lavender mr-2 animate-float" />
+          Daily Motivation 💫
         </CardTitle>
       </CardHeader>
       <CardContent>

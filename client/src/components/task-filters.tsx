@@ -53,12 +53,12 @@ export function TaskFilters({ tasks, onFilterChange }: TaskFiltersProps) {
   })();
 
   return (
-    <Card className="shadow-lg border-gray-100">
+    <Card className="card-bloom shadow-xl border-pink-200/40 dark:border-purple-500/30">
       <CardContent className="p-6">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center space-x-2">
-            <h3 className="font-semibold text-gray-800">Filter Tasks</h3>
-            <Badge variant="secondary" className="bg-mint/10 text-mint">
+            <h3 className="font-semibold text-gray-800 dark:text-gray-100">Filter Tasks 🔍</h3>
+            <Badge variant="secondary" className="bg-gradient-to-r from-mint/20 to-sky/20 text-mint font-medium animate-shimmer">
               {filteredCount} tasks
             </Badge>
           </div>

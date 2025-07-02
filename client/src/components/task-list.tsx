@@ -59,11 +59,11 @@ export function TaskList({ filteredTasks }: TaskListProps) {
   }
 
   return (
-    <Card className="shadow-lg border-gray-100 overflow-hidden">
-      <CardHeader className="border-b border-gray-100">
-        <CardTitle className="flex items-center text-xl font-semibold text-gray-800">
-          <CheckSquare className="w-5 h-5 text-sky mr-2" />
-          Today's Tasks
+    <Card className="card-bloom shadow-xl border-pink-200/40 dark:border-purple-500/30 overflow-hidden">
+      <CardHeader className="border-b border-pink-200/30 dark:border-purple-500/30">
+        <CardTitle className="flex items-center text-xl font-semibold text-gray-800 dark:text-gray-100">
+          <CheckSquare className="w-6 h-6 text-sky mr-2 animate-float" />
+          Today's Tasks 📋
         </CardTitle>
       </CardHeader>
       <CardContent className="p-0">
