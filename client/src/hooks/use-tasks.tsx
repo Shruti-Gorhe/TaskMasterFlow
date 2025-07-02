@@ -12,7 +12,13 @@ export function useTasks() {
 
   const createTaskMutation = useMutation({
     mutationFn: async (task: InsertTask): Promise<Task> => {
+      console.log("Sending request with data:", task);
       const response = await apiRequest("POST", "/api/tasks", task);
+      if (!response.ok) {
+        const errorData = await response.text();
+        console.error("Server error response:", errorData);
+        throw new Error(`HTTP ${response.status}: ${errorData}`);
+      }
       return response.json();
     },
     onSuccess: () => {
@@ -22,7 +28,8 @@ export function useTasks() {
         description: "Your new task has been added successfully.",
       });
     },
-    onError: () => {
+    onError: (error) => {
+      console.error("Create task error:", error);
       toast({
         title: "Error",
         description: "Failed to create task. Please try again.",

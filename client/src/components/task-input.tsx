@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -21,16 +21,7 @@ export function TaskInput() {
     order: 0,
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formData.title.trim()) return;
-
-    createTask({
-      ...formData,
-      order: Date.now(), // Simple ordering system
-    });
-
-    // Reset form
+  const resetForm = () => {
     setFormData({
       title: "",
       description: "",
@@ -40,6 +31,36 @@ export function TaskInput() {
       completed: false,
       order: 0,
     });
+  };
+
+  useEffect(() => {
+    if (!isCreating) {
+      // Form reset happens here when task creation completes
+      const timer = setTimeout(resetForm, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [isCreating]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.title.trim()) {
+      console.error("Title is required");
+      return;
+    }
+
+    const taskData = {
+      title: formData.title.trim(),
+      description: formData.description?.trim() || null,
+      category: formData.category || "Personal",
+      priority: formData.priority || "Medium",
+      dueDate: formData.dueDate || null,
+      completed: formData.completed || false,
+      order: Date.now(), // Simple ordering system
+    };
+
+    console.log("Submitting task data:", taskData);
+    
+    createTask(taskData);
   };
 
   return (
