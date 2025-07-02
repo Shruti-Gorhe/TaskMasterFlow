@@ -1,8 +1,14 @@
-# TaskFlow - Task Management Application
+# TaskFlow - Gamified Task Management & Habit Tracking Application
 
 ## Overview
 
-TaskFlow is a modern, full-stack task management application built with React, TypeScript, Express.js, and PostgreSQL. The application provides a comprehensive task management experience with features like progress tracking, motivational quotes, celebrations, and a clean, responsive UI powered by shadcn/ui components and Tailwind CSS.
+TaskFlow is a comprehensive, gamified task management and habit tracking application built with React, TypeScript, Express.js, and PostgreSQL. The application transforms productivity into an engaging experience with advanced features including:
+
+**🎮 Gamification System**: XP points, levels, streaks, badges, and celebration animations
+**📋 Advanced Task Management**: Subtasks, notes, attachments, time tracking, recurring tasks, and dependencies  
+**🎯 Habit Tracking**: Daily habit monitoring with progress visualization and streak tracking
+**🌸 Beautiful UI**: Clean pastel theme with tabbed navigation, confetti animations, and motivational elements
+**📊 Analytics Dashboard**: Progress tracking, weekly overviews, and performance analytics
 
 ## System Architecture
 
@@ -99,6 +105,12 @@ Changelog:
 - July 02, 2025. Added Thought of the Day feature with inspirational quotes
 - July 02, 2025. Updated background to pastel pink flowers with beautiful SVG patterns
 - July 02, 2025. Enhanced form validation and error handling
+- July 02, 2025. MAJOR UPDATE: Implemented comprehensive gamification system with XP, levels, streaks, and badges
+- July 02, 2025. MAJOR UPDATE: Added full habit tracking system with daily/weekly progress monitoring
+- July 02, 2025. MAJOR UPDATE: Added confetti celebration animations for task completions
+- July 02, 2025. MAJOR UPDATE: Expanded database schema to support subtasks, notes, attachments, and time tracking
+- July 02, 2025. Updated UI to clean pastel theme with tabbed navigation (Tasks, Habits, Progress, Analytics)
+- July 02, 2025. Added comprehensive API routes for all gamification and habit tracking features
 ```
 
 ## User Preferences

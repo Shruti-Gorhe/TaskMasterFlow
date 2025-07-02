@@ -19,6 +19,9 @@ export function TaskInput() {
     dueDate: "",
     completed: false,
     order: 0,
+    recurrenceType: "none",
+    recurrenceInterval: 1,
+    isRecurring: false,
   });
 
   const resetForm = () => {
@@ -30,6 +33,9 @@ export function TaskInput() {
       dueDate: "",
       completed: false,
       order: 0,
+      recurrenceType: "none",
+      recurrenceInterval: 1,
+      isRecurring: false,
     });
   };
 
@@ -56,6 +62,9 @@ export function TaskInput() {
       dueDate: formData.dueDate || null,
       completed: formData.completed || false,
       order: Math.floor(Date.now() / 1000), // Convert to seconds to fit in integer range
+      recurrenceType: formData.recurrenceType || "none",
+      recurrenceInterval: formData.recurrenceInterval || 1,
+      isRecurring: formData.isRecurring || false,
     };
 
     console.log("Submitting task data:", taskData);
