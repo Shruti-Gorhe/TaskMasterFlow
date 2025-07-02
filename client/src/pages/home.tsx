@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
-import { Moon, Sun, ListTodo, Trophy, Target, TrendingUp } from "lucide-react";
+import { Moon, Sun, ListTodo } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TaskInput } from "@/components/task-input";
 import { TaskFilters } from "@/components/task-filters";
 import { TaskList } from "@/components/task-list";
@@ -12,9 +11,6 @@ import { WeeklyOverview } from "@/components/weekly-overview";
 import { QuickActions } from "@/components/quick-actions";
 import { CelebrationModal } from "@/components/celebration-modal";
 import { ThoughtOfTheDay } from "@/components/thought-of-the-day";
-import { GamificationDashboard } from "@/components/gamification-dashboard";
-import { HabitTracker } from "@/components/habit-tracker";
-import { ConfettiCelebration } from "@/components/confetti-celebration";
 import { useTheme } from "@/components/theme-provider";
 import { useTasks } from "@/hooks/use-tasks";
 import type { Task } from "@shared/schema";
@@ -23,8 +19,6 @@ export default function Home() {
   const { theme, toggleTheme } = useTheme();
   const { tasks, isLoading } = useTasks();
   const [filteredTasks, setFilteredTasks] = useState<Task[]>([]);
-  const [showCelebration, setShowCelebration] = useState(false);
-  const [celebrationMessage, setCelebrationMessage] = useState("");
 
   // Update filtered tasks when tasks change
   useEffect(() => {
@@ -32,11 +26,6 @@ export default function Home() {
   }, [tasks]);
 
   const completedTasks = tasks.filter(task => task.completed).length;
-
-  const triggerCelebration = (message: string = "Amazing work! 🎉") => {
-    setCelebrationMessage(message);
-    setShowCelebration(true);
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 dark:from-gray-900 dark:via-purple-900/20 dark:to-blue-900/20">
@@ -88,93 +77,24 @@ export default function Home() {
 
       {/* Main Content */}
       <main className="max-w-6xl mx-auto px-4 py-8">
-        <Tabs defaultValue="tasks" className="w-full">
-          <TabsList className="grid w-full grid-cols-4 mb-8 bg-gradient-to-r from-pastel-pink/20 to-pastel-purple/20 border border-pastel-pink/30">
-            <TabsTrigger value="tasks" className="flex items-center space-x-2 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800">
-              <ListTodo className="w-4 h-4" />
-              <span>Tasks</span>
-            </TabsTrigger>
-            <TabsTrigger value="habits" className="flex items-center space-x-2 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800">
-              <Target className="w-4 h-4" />
-              <span>Habits</span>
-            </TabsTrigger>
-            <TabsTrigger value="progress" className="flex items-center space-x-2 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800">
-              <Trophy className="w-4 h-4" />
-              <span>Progress</span>
-            </TabsTrigger>
-            <TabsTrigger value="analytics" className="flex items-center space-x-2 data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800">
-              <TrendingUp className="w-4 h-4" />
-              <span>Analytics</span>
-            </TabsTrigger>
-          </TabsList>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Left Column: Task Input & Filters */}
+          <div className="lg:col-span-2 space-y-6">
+            <TaskInput />
+            <TaskFilters tasks={tasks} onFilterChange={setFilteredTasks} />
+            <TaskList filteredTasks={filteredTasks} />
+          </div>
 
-          {/* Tasks Tab */}
-          <TabsContent value="tasks" className="space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              {/* Left Column: Task Input & Filters */}
-              <div className="lg:col-span-2 space-y-6">
-                <TaskInput />
-                <TaskFilters tasks={tasks} onFilterChange={setFilteredTasks} />
-                <TaskList filteredTasks={filteredTasks} />
-              </div>
-
-              {/* Right Column: Quick Stats & Motivation */}
-              <div className="space-y-6">
-                <ProgressTracker tasks={tasks} />
-                <ThoughtOfTheDay />
-                <QuickActions />
-              </div>
-            </div>
-          </TabsContent>
-
-          {/* Habits Tab */}
-          <TabsContent value="habits" className="space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              <div className="lg:col-span-2">
-                <HabitTracker />
-              </div>
-              <div className="space-y-6">
-                <MotivationalQuote />
-                <ThoughtOfTheDay />
-              </div>
-            </div>
-          </TabsContent>
-
-          {/* Progress Tab */}
-          <TabsContent value="progress" className="space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              <div className="lg:col-span-2">
-                <GamificationDashboard onCelebration={() => triggerCelebration("Level up! You're amazing! 🎉")} />
-              </div>
-              <div className="space-y-6">
-                <ProgressTracker tasks={tasks} />
-                <WeeklyOverview tasks={tasks} />
-              </div>
-            </div>
-          </TabsContent>
-
-          {/* Analytics Tab */}
-          <TabsContent value="analytics" className="space-y-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <div className="space-y-6">
-                <WeeklyOverview tasks={tasks} />
-                <ProgressTracker tasks={tasks} />
-              </div>
-              <div className="space-y-6">
-                <MotivationalQuote />
-                <ThoughtOfTheDay />
-              </div>
-            </div>
-          </TabsContent>
-        </Tabs>
+          {/* Right Column: Stats & Motivation */}
+          <div className="space-y-6">
+            <ProgressTracker tasks={tasks} />
+            <ThoughtOfTheDay />
+            <MotivationalQuote />
+            <WeeklyOverview tasks={tasks} />
+            <QuickActions />
+          </div>
+        </div>
       </main>
-
-      {/* Celebration Effects */}
-      <ConfettiCelebration 
-        isVisible={showCelebration}
-        onComplete={() => setShowCelebration(false)}
-        message={celebrationMessage}
-      />
 
       {/* Celebration Modal */}
       <CelebrationModal tasks={tasks} />
