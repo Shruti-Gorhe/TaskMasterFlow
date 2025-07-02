@@ -28,7 +28,7 @@ export default function Home() {
   const completedTasks = tasks.filter(task => task.completed).length;
 
   return (
-    <div className="min-h-screen floral-bg floral-pattern bg-gradient-to-br from-rose-50/30 via-sky-50/30 to-mint-50/30 dark:from-gray-900 dark:via-purple-900/20 dark:to-gray-900">
+    <div className="min-h-screen floral-bg floral-pattern bg-gradient-to-br from-pink-50/40 via-rose-50/30 to-pink-100/20 dark:from-gray-900 dark:via-pink-900/10 dark:to-gray-900">
       {/* Header */}
       <header className="card-bloom backdrop-blur-md border-b border-pink-200/30 dark:border-gray-700/50 sticky top-0 z-50 animate-shimmer">
         <div className="max-w-6xl mx-auto px-4 py-4">

@@ -93,7 +93,12 @@ The application uses a single `tasks` table with the following structure:
 
 ```
 Changelog:
-- July 02, 2025. Initial setup
+- July 02, 2025. Initial setup with React, Express, PostgreSQL
+- July 02, 2025. Fixed critical integer overflow bug in task creation (order field)
+- July 02, 2025. Added PostgreSQL database integration with Drizzle ORM
+- July 02, 2025. Added Thought of the Day feature with inspirational quotes
+- July 02, 2025. Updated background to pastel pink flowers with beautiful SVG patterns
+- July 02, 2025. Enhanced form validation and error handling
 ```
 
 ## User Preferences

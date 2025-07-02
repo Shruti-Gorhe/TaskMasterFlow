@@ -219,18 +219,22 @@
 
 /* Pastel Floral Background Patterns */
 .floral-bg {
+  background: linear-gradient(135deg, #fef2f2 0%, #fdf2f8 25%, #f9fafb 50%, #fef7ed 75%, #fef2f2 100%);
   background-image: 
-    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 40% 40%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 60% 60%, rgba(251, 191, 36, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 90% 10%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
+    radial-gradient(circle at 25% 75%, rgba(251, 113, 133, 0.12) 0%, transparent 45%),
+    radial-gradient(circle at 75% 25%, rgba(244, 114, 182, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 15% 35%, rgba(236, 72, 153, 0.06) 0%, transparent 38%),
+    radial-gradient(circle at 85% 65%, rgba(219, 39, 119, 0.05) 0%, transparent 35%),
+    radial-gradient(circle at 45% 15%, rgba(190, 24, 93, 0.04) 0%, transparent 32%),
+    radial-gradient(circle at 55% 85%, rgba(244, 63, 94, 0.07) 0%, transparent 42%),
+    radial-gradient(circle at 65% 45%, rgba(251, 113, 133, 0.09) 0%, transparent 36%);
 }
 
 .floral-pattern {
   background-image: 
-    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23fbbf24' fill-opacity='0.05'%3E%3Cpath d='M30 30c0-11.046-8.954-20-20-20S-10 18.954-10 30s8.954 20 20 20 20-8.954 20-20zM10 30c0-11.046 8.954-20 20-20s20 8.954 20 20-8.954 20-20 20-20-8.954-20-20z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"),
-    url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2310b981' fill-opacity='0.06'%3E%3Cpath d='M20 20c0-8.837-7.163-16-16-16S-12 11.163-12 20s7.163 16 16 16 16-7.163 16-16zM4 20c0-8.837 7.163-16 16-16s16 7.163 16 20-7.163 16-16 16-16-7.163-16-16z'/%3E%3C/g%3E%3C/svg%3E");
+    url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f472b6' fill-opacity='0.08'%3E%3Cpath d='M40 40c-3.314 0-6-2.686-6-6 0-8.837 7.163-16 16-16s16 7.163 16 16c0 3.314-2.686 6-6 6-8.837 0-16-7.163-16-16z'/%3E%3Cpath d='M40 40c0-3.314-2.686-6-6-6-8.837 0-16-7.163-16-16s7.163-16 16-16c3.314 0 6 2.686 6 6 0 8.837-7.163 16-16 16z'/%3E%3Cpath d='M40 40c3.314 0 6 2.686 6 6 0 8.837-7.163 16-16 16s-16-7.163-16-16c0-3.314 2.686-6 6-6 8.837 0 16 7.163 16 16z'/%3E%3Cpath d='M40 40c0 3.314 2.686 6 6 6 8.837 0 16 7.163 16 16s-7.163 16-16 16c-3.314 0-6-2.686-6-6 0-8.837 7.163-16 16-16z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg width='50' height='50' viewBox='0 0 50 50' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ec4899' fill-opacity='0.06'%3E%3Ccircle cx='25' cy='8' r='3'/%3E%3Ccircle cx='42' cy='25' r='3'/%3E%3Ccircle cx='25' cy='42' r='3'/%3E%3Ccircle cx='8' cy='25' r='3'/%3E%3Cpath d='M25 25m-12 0a12 12 0 1 0 24 0a12 12 0 1 0 -24 0'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23fb7185' fill-opacity='0.04'%3E%3Cpath d='M15 15c-4.418 0-8-3.582-8-8s3.582-8 8-8 8 3.582 8 8-3.582 8-8 8zm0-2c3.314 0 6-2.686 6-6s-2.686-6-6-6-6 2.686-6 6 2.686 6 6 6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 
 .card-bloom {
