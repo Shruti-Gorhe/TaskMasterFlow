@@ -70,6 +70,11 @@ export default {
         "lemon-dark": "var(--lemon-dark)",
         slate: "var(--slate)",
         cool: "var(--cool)",
+        "pastel-pink": "var(--pastel-pink)",
+        "pastel-purple": "var(--pastel-purple)",
+        "pastel-blue": "var(--pastel-blue)",
+        "pastel-green": "var(--pastel-green)",
+        "pastel-peach": "var(--pastel-peach)",
       },
       keyframes: {
         "accordion-down": {
