@@ -1,0 +1,189 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(20, 14.3%, 4.1%);
+  --muted: hsl(60, 4.8%, 95.9%);
+  --muted-foreground: hsl(25, 5.3%, 44.7%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(20, 14.3%, 4.1%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(20, 14.3%, 4.1%);
+  --border: hsl(20, 5.9%, 90%);
+  --input: hsl(20, 5.9%, 90%);
+  --primary: hsl(158, 64%, 52%);
+  --primary-foreground: hsl(0, 0%, 100%);
+  --secondary: hsl(60, 4.8%, 95.9%);
+  --secondary-foreground: hsl(24, 9.8%, 10%);
+  --accent: hsl(60, 4.8%, 95.9%);
+  --accent-foreground: hsl(24, 9.8%, 10%);
+  --destructive: hsl(0, 84.2%, 60.2%);
+  --destructive-foreground: hsl(60, 9.1%, 97.8%);
+  --ring: hsl(20, 14.3%, 4.1%);
+  --radius: 0.5rem;
+  
+  /* Task Management Colors */
+  --mint: hsl(158, 64%, 52%);
+  --sky: hsl(199, 89%, 48%);
+  --lavender: hsl(251, 91%, 75%);
+  --coral: hsl(339, 90%, 68%);
+  --lemon: hsl(54, 91%, 59%);
+  --slate: hsl(215, 25%, 52%);
+  --cool: hsl(210, 40%, 98%);
+}
+
+.dark {
+  --background: hsl(240, 10%, 3.9%);
+  --foreground: hsl(0, 0%, 98%);
+  --muted: hsl(240, 3.7%, 15.9%);
+  --muted-foreground: hsl(240, 5%, 64.9%);
+  --popover: hsl(240, 10%, 3.9%);
+  --popover-foreground: hsl(0, 0%, 98%);
+  --card: hsl(240, 10%, 3.9%);
+  --card-foreground: hsl(0, 0%, 98%);
+  --border: hsl(240, 3.7%, 15.9%);
+  --input: hsl(240, 3.7%, 15.9%);
+  --primary: hsl(158, 64%, 52%);
+  --primary-foreground: hsl(0, 0%, 100%);
+  --secondary: hsl(240, 3.7%, 15.9%);
+  --secondary-foreground: hsl(0, 0%, 98%);
+  --accent: hsl(240, 3.7%, 15.9%);
+  --accent-foreground: hsl(0, 0%, 98%);
+  --destructive: hsl(0, 62.8%, 30.6%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --ring: hsl(240, 4.9%, 83.9%);
+  --radius: 0.5rem;
+  
+  /* Dark mode task colors */
+  --mint: hsl(158, 64%, 52%);
+  --sky: hsl(199, 89%, 48%);
+  --lavender: hsl(251, 91%, 75%);
+  --coral: hsl(339, 90%, 68%);
+  --lemon: hsl(54, 91%, 59%);
+  --slate: hsl(215, 25%, 72%);
+  --cool: hsl(240, 10%, 8%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+    font-family: 'Poppins', sans-serif;
+  }
+}
+
+@layer utilities {
+  .bg-mint {
+    background-color: var(--mint);
+  }
+  
+  .bg-sky {
+    background-color: var(--sky);
+  }
+  
+  .bg-lavender {
+    background-color: var(--lavender);
+  }
+  
+  .bg-coral {
+    background-color: var(--coral);
+  }
+  
+  .bg-lemon {
+    background-color: var(--lemon);
+  }
+  
+  .text-mint {
+    color: var(--mint);
+  }
+  
+  .text-sky {
+    color: var(--sky);
+  }
+  
+  .text-lavender {
+    color: var(--lavender);
+  }
+  
+  .text-coral {
+    color: var(--coral);
+  }
+  
+  .text-lemon {
+    color: var(--lemon);
+  }
+  
+  .border-mint {
+    border-color: var(--mint);
+  }
+  
+  .border-sky {
+    border-color: var(--sky);
+  }
+  
+  .border-lavender {
+    border-color: var(--lavender);
+  }
+  
+  .border-coral {
+    border-color: var(--coral);
+  }
+  
+  .border-lemon {
+    border-color: var(--lemon);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes confetti {
+  0% {
+    transform: translateY(-100vh) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+.animate-bounce-in {
+  animation: bounceIn 0.6s ease-out;
+}
+
+.animate-slide-in {
+  animation: slideIn 0.3s ease-out;
+}
+
+.animate-confetti {
+  animation: confetti 3s linear infinite;
+}
