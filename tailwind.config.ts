@@ -61,6 +61,15 @@ export default {
           border: "var(--sidebar-border)",
           ring: "var(--sidebar-ring)",
         },
+        // Custom pastel colors for TaskFlow
+        mint: "var(--mint)",
+        sky: "var(--sky)",
+        lavender: "var(--lavender)",
+        coral: "var(--coral)",
+        lemon: "var(--lemon)",
+        "lemon-dark": "var(--lemon-dark)",
+        slate: "var(--slate)",
+        cool: "var(--cool)",
       },
       keyframes: {
         "accordion-down": {

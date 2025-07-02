@@ -10,6 +10,7 @@ import { MotivationalQuote } from "@/components/motivational-quote";
 import { WeeklyOverview } from "@/components/weekly-overview";
 import { QuickActions } from "@/components/quick-actions";
 import { CelebrationModal } from "@/components/celebration-modal";
+import { ThoughtOfTheDay } from "@/components/thought-of-the-day";
 import { useTheme } from "@/components/theme-provider";
 import { useTasks } from "@/hooks/use-tasks";
 import type { Task } from "@shared/schema";
@@ -87,6 +88,7 @@ export default function Home() {
           {/* Right Column: Stats & Motivation */}
           <div className="space-y-6">
             <ProgressTracker tasks={tasks} />
+            <ThoughtOfTheDay />
             <MotivationalQuote />
             <WeeklyOverview tasks={tasks} />
             <QuickActions />

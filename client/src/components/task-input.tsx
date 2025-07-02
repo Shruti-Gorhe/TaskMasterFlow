@@ -55,7 +55,7 @@ export function TaskInput() {
       priority: formData.priority || "Medium",
       dueDate: formData.dueDate || null,
       completed: formData.completed || false,
-      order: Date.now(), // Simple ordering system
+      order: Math.floor(Date.now() / 1000), // Convert to seconds to fit in integer range
     };
 
     console.log("Submitting task data:", taskData);
