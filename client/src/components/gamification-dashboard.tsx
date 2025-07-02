@@ -20,8 +20,9 @@ export function GamificationDashboard({ onCelebration }: GamificationDashboardPr
 
   const fetchStats = async () => {
     try {
-      const response = await apiRequest("/api/stats");
-      setStats(response);
+      const response = await apiRequest("GET", "/api/stats");
+      const data = await response.json();
+      setStats(data);
     } catch (error) {
       console.error("Failed to fetch stats:", error);
     } finally {
@@ -137,7 +138,7 @@ export function GamificationDashboard({ onCelebration }: GamificationDashboardPr
       </Card>
 
       {/* Badges */}
-      {stats?.badges && Array.isArray(stats.badges) && stats.badges.length > 0 && (
+      {stats?.badges && stats.badges !== null && (
         <Card className="card-bloom shadow-lg border-pastel-purple/30">
           <CardHeader>
             <CardTitle className="flex items-center text-lg font-semibold text-gray-800 dark:text-gray-100">
@@ -146,22 +147,41 @@ export function GamificationDashboard({ onCelebration }: GamificationDashboardPr
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-              {stats.badges.map((badge: any, index: number) => (
-                <div
-                  key={index}
-                  className={`${getBadgeColor(badge.type)} p-3 rounded-lg text-white text-center shadow-lg transform hover:scale-105 transition-all duration-200`}
-                >
-                  <div className="flex items-center justify-center mb-1">
-                    {getBadgeIcon(badge.type)}
+            {(() => {
+              try {
+                const badgeArray = Array.isArray(stats.badges) ? stats.badges : [];
+                return badgeArray.length > 0 ? (
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                    {badgeArray.map((badge: any, index: number) => (
+                      <div
+                        key={index}
+                        className={`${getBadgeColor(badge.type || 'default')} p-3 rounded-lg text-white text-center shadow-lg transform hover:scale-105 transition-all duration-200`}
+                      >
+                        <div className="flex items-center justify-center mb-1">
+                          {getBadgeIcon(badge.type || 'default')}
+                        </div>
+                        <div className="text-xs font-medium">{badge.name || 'Achievement'}</div>
+                        {badge.description && (
+                          <div className="text-xs opacity-80 mt-1">{badge.description}</div>
+                        )}
+                      </div>
+                    ))}
                   </div>
-                  <div className="text-xs font-medium">{badge.name}</div>
-                  {badge.description && (
-                    <div className="text-xs opacity-80 mt-1">{badge.description}</div>
-                  )}
-                </div>
-              ))}
-            </div>
+                ) : (
+                  <div className="text-center text-gray-500 dark:text-gray-400 py-8">
+                    <Trophy className="w-12 h-12 mx-auto mb-2 opacity-50" />
+                    <p>Complete tasks and habits to earn achievements!</p>
+                  </div>
+                );
+              } catch (error) {
+                return (
+                  <div className="text-center text-gray-500 dark:text-gray-400 py-8">
+                    <Trophy className="w-12 h-12 mx-auto mb-2 opacity-50" />
+                    <p>Complete tasks and habits to earn achievements!</p>
+                  </div>
+                );
+              }
+            })()}
           </CardContent>
         </Card>
       )}

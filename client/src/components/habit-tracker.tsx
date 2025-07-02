@@ -32,10 +32,12 @@ export function HabitTracker() {
 
   const fetchHabits = async () => {
     try {
-      const habitsData = await apiRequest("/api/habits");
+      const habitsResponse = await apiRequest("GET", "/api/habits");
+      const habitsData = await habitsResponse.json();
       const habitsWithEntries = await Promise.all(
         habitsData.map(async (habit: Habit) => {
-          const entries = await apiRequest(`/api/habits/${habit.id}/entries?date=${today}`);
+          const entriesResponse = await apiRequest("GET", `/api/habits/${habit.id}/entries?date=${today}`);
+          const entries = await entriesResponse.json();
           const todayEntry = entries.find((entry: HabitEntry) => entry.date === today);
           
           // Calculate week progress
@@ -57,8 +59,8 @@ export function HabitTracker() {
     }
   };
 
-  const getWeekEntries = async (habitId: number) => {
-    const weekDates = [];
+  const getWeekEntries = async (habitId: number): Promise<HabitEntry[]> => {
+    const weekDates: string[] = [];
     for (let i = 6; i >= 0; i--) {
       const date = new Date();
       date.setDate(date.getDate() - i);
@@ -66,7 +68,8 @@ export function HabitTracker() {
     }
     
     try {
-      const entries = await apiRequest(`/api/habits/${habitId}/entries`);
+      const entriesResponse = await apiRequest("GET", `/api/habits/${habitId}/entries`);
+      const entries = await entriesResponse.json();
       return entries.filter((entry: HabitEntry) => weekDates.includes(entry.date));
     } catch (error) {
       return [];
@@ -93,19 +96,16 @@ export function HabitTracker() {
       const existingEntry = habits.find(h => h.id === habitId)?.todayEntry;
       
       if (existingEntry) {
-        await apiRequest(`/api/habits/entries/${existingEntry.id}`, {
-          method: "PATCH",
-          body: JSON.stringify({ value, completed: value > 0 }),
+        await apiRequest("PATCH", `/api/habits/entries/${existingEntry.id}`, {
+          value, 
+          completed: value > 0 
         });
       } else {
-        await apiRequest("/api/habits/entries", {
-          method: "POST", 
-          body: JSON.stringify({
-            habitId,
-            date: today,
-            value,
-            completed: value > 0,
-          }),
+        await apiRequest("POST", "/api/habits/entries", {
+          habitId,
+          date: today,
+          value,
+          completed: value > 0,
         });
       }
       
@@ -117,10 +117,7 @@ export function HabitTracker() {
 
   const createHabit = async () => {
     try {
-      await apiRequest("/api/habits", {
-        method: "POST",
-        body: JSON.stringify(newHabit),
-      });
+      await apiRequest("POST", "/api/habits", newHabit);
       
       setNewHabit({
         title: "",
@@ -264,15 +261,15 @@ export function HabitTracker() {
                           <Input
                             type="number"
                             min="0"
-                            max={habit.targetValue * 2}
+                            max={(habit.targetValue || 1) * 2}
                             value={habit.todayEntry?.value || 0}
                             onChange={(e) => updateHabitEntry(habit.id, parseInt(e.target.value) || 0)}
                             className="w-16 h-8 text-center border-pastel-mint/50"
                           />
-                          <span className="text-sm text-gray-500">/ {habit.targetValue}</span>
+                          <span className="text-sm text-gray-500">/ {habit.targetValue || 1}</span>
                           <button
                             onClick={() => {
-                              const newValue = habit.todayEntry?.completed ? 0 : habit.targetValue;
+                              const newValue = habit.todayEntry?.completed ? 0 : (habit.targetValue || 1);
                               updateHabitEntry(habit.id, newValue);
                             }}
                             className="p-1"
@@ -290,7 +287,7 @@ export function HabitTracker() {
                     {/* Daily progress bar */}
                     <div className="mt-3">
                       <Progress 
-                        value={Math.min(((habit.todayEntry?.value || 0) / habit.targetValue) * 100, 100)}
+                        value={Math.min(((habit.todayEntry?.value || 0) / (habit.targetValue || 1)) * 100, 100)}
                         className="h-2"
                       />
                     </div>
