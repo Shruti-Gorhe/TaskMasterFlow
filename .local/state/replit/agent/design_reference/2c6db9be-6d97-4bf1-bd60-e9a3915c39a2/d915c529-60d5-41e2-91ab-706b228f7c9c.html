@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskFlow - Modern Task Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        'mint': '#10B981',
+                        'sky': '#0EA5E9',
+                        'lavender': '#A78BFA',
+                        'coral': '#F472B6',
+                        'lemon': '#FDE047',
+                        'slate': '#64748B',
+                        'cool': '#F8FAFC',
+                    },
+                    animation: {
+                        'bounce-in': 'bounceIn 0.6s ease-out',
+                        'slide-in': 'slideIn 0.3s ease-out',
+                        'pulse-slow': 'pulse 3s infinite',
+                    },
+                    keyframes: {
+                        bounceIn: {
+                            '0%': { transform: 'scale(0.3)', opacity: '0' },
+                            '50%': { transform: 'scale(1.05)', opacity: '0.8' },
+                            '100%': { transform: 'scale(1)', opacity: '1' },
+                        },
+                        slideIn: {
+                            '0%': { transform: 'translateX(-100%)', opacity: '0' },
+                            '100%': { transform: 'translateX(0)', opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gradient-to-br from-cool via-blue-50 to-mint/10 min-h-screen font-poppins">
+    <!-- @COMPONENT: AppHeader -->
+    <header class="bg-white/80 backdrop-blur-md border-b border-gray-200/50 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-r from-mint to-sky rounded-xl flex items-center justify-center">
+                        <i class="fas fa-tasks text-white text-lg"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold bg-gradient-to-r from-mint to-sky bg-clip-text text-transparent">TaskFlow</h1>
+                        <p class="text-sm text-slate-500">Stay organized, stay motivated</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <!-- @STATE: darkMode:boolean = false -->
+                    <button data-event="click:toggleDarkMode" class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors">
+                        <i class="fas fa-moon text-slate-600"></i>
+                    </button>
+                    
+                    <div class="flex items-center space-x-2 bg-white rounded-full px-4 py-2 shadow-sm">
+                        <div class="w-3 h-3 bg-mint rounded-full animate-pulse"></div>
+                        <span class="text-sm font-medium text-slate-700" data-bind="completedTasks">12</span>
+                        <span class="text-sm text-slate-500">tasks completed today</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- @END_COMPONENT: AppHeader -->
+
+    <main class="max-w-6xl mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- Left Column: Task Input & Filters -->
+            <div class="lg:col-span-2 space-y-6">
+                
+                <!-- @COMPONENT: TaskInput -->
+                <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                        <i class="fas fa-plus-circle text-mint mr-2"></i>
+                        Add New Task
+                    </h2>
+                    
+                    <form data-event="submit:handleAddTask" class="space-y-4">
+                        <div class="flex flex-col md:flex-row gap-4">
+                            <input 
+                                type="text" 
+                                placeholder="What needs to be done? ✨" 
+                                class="flex-1 px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-mint/50 focus:border-mint transition-all"
+                                data-mock="true"
+                                data-bind="taskInput.title"
+                            />
+                            <button type="submit" class="px-6 py-3 bg-gradient-to-r from-mint to-sky text-white rounded-xl hover:shadow-lg transform hover:scale-105 transition-all duration-200 font-medium">
+                                <i class="fas fa-plus mr-2"></i>Add Task
+                            </button>
+                        </div>
+                        
+                        <div class="flex flex-wrap gap-3">
+                            <select class="px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-lavender/50" data-bind="taskInput.category">
+                                <option data-mock="true">📚 Personal</option>
+                                <option data-mock="true">💼 Work</option>
+                                <option data-mock="true">💪 Fitness</option>
+                                <option data-mock="true">🏠 Home</option>
+                            </select>
+                            
+                            <select class="px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-coral/50" data-bind="taskInput.priority">
+                                <option data-mock="true">🔴 High Priority</option>
+                                <option data-mock="true">🟡 Medium Priority</option>
+                                <option data-mock="true">🟢 Low Priority</option>
+                            </select>
+                            
+                            <input 
+                                type="date" 
+                                class="px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-lemon/50"
+                                data-bind="taskInput.dueDate"
+                            />
+                        </div>
+                    </form>
+                </div>
+                <!-- @END_COMPONENT: TaskInput -->
+
+                <!-- @COMPONENT: TaskFilters -->
+                <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+                    <div class="flex flex-wrap items-center justify-between gap-4">
+                        <div class="flex items-center space-x-2">
+                            <h3 class="font-semibold text-gray-800">Filter Tasks</h3>
+                            <span class="bg-mint/10 text-mint px-2 py-1 rounded-full text-sm font-medium" data-bind="filteredTasksCount">24 tasks</span>
+                        </div>
+                        
+                        <div class="flex flex-wrap gap-2">
+                            <button data-event="click:filterAll" class="px-4 py-2 bg-mint text-white rounded-lg hover:bg-mint/90 transition-colors text-sm font-medium">
+                                All Tasks
+                            </button>
+                            <button data-event="click:filterPending" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm font-medium">
+                                Pending
+                            </button>
+                            <button data-event="click:filterCompleted" class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm font-medium">
+                                Completed
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 flex flex-wrap gap-2">
+                        <span class="text-sm text-gray-600">Categories:</span>
+                        <button class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm hover:bg-blue-200 transition-colors">📚 Personal</button>
+                        <button class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm hover:bg-purple-200 transition-colors">💼 Work</button>
+                        <button class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm hover:bg-green-200 transition-colors">💪 Fitness</button>
+                        <button class="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-sm hover:bg-yellow-200 transition-colors">🏠 Home</button>
+                    </div>
+                </div>
+                <!-- @END_COMPONENT: TaskFilters -->
+
+                <!-- @COMPONENT: TaskList -->
+                <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+                    <div class="p-6 border-b border-gray-100">
+                        <h3 class="text-xl font-semibold text-gray-800 flex items-center">
+                            <i class="fas fa-list-check text-sky mr-2"></i>
+                            Today's Tasks
+                        </h3>
+                    </div>
+                    
+                    <div class="divide-y divide-gray-100" data-mock="true">
+                        <!-- @MAP: tasks.map(task => ( -->
+                        
+                        <!-- High Priority Task -->
+                        <div class="p-6 hover:bg-gray-50/50 transition-colors group" data-implementation="Draggable task item">
+                            <div class="flex items-center space-x-4">
+                                <button class="w-6 h-6 border-2 border-red-300 rounded-full hover:bg-red-50 transition-colors flex items-center justify-center">
+                                    <i class="fas fa-check text-red-500 opacity-0 group-hover:opacity-100 transition-opacity text-sm"></i>
+                                </button>
+                                
+                                <div class="flex-1">
+                                    <div class="flex items-center space-x-2 mb-1">
+                                        <h4 class="font-medium text-gray-800">Complete project presentation</h4>
+                                        <span class="px-2 py-1 bg-red-100 text-red-700 rounded-full text-xs font-medium">🔴 High</span>
+                                        <span class="px-2 py-1 bg-purple-100 text-purple-700 rounded-full text-xs">💼 Work</span>
+                                    </div>
+                                    <p class="text-sm text-gray-600">Finalize slides and prepare demo for client meeting</p>
+                                    <div class="flex items-center space-x-4 mt-2 text-xs text-gray-500">
+                                        <span class="flex items-center"><i class="far fa-clock mr-1"></i>Due: Today</span>
+                                        <span class="flex items-center"><i class="fas fa-flag mr-1"></i>Important</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button class="p-2 text-gray-400 hover:text-sky hover:bg-sky/10 rounded-lg transition-colors">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="p-2 text-gray-400 hover:text-red-500 hover:bg-red/10 rounded-lg transition-colors">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Medium Priority Task -->
+                        <div class="p-6 hover:bg-gray-50/50 transition-colors group">
+                            <div class="flex items-center space-x-4">
+                                <button class="w-6 h-6 border-2 border-yellow-300 rounded-full hover:bg-yellow-50 transition-colors flex items-center justify-center">
+                                    <i class="fas fa-check text-yellow-500 opacity-0 group-hover:opacity-100 transition-opacity text-sm"></i>
+                                </button>
+                                
+                                <div class="flex-1">
+                                    <div class="flex items-center space-x-2 mb-1">
+                                        <h4 class="font-medium text-gray-800">Go for a 30-minute walk</h4>
+                                        <span class="px-2 py-1 bg-yellow-100 text-yellow-700 rounded-full text-xs font-medium">🟡 Medium</span>
+                                        <span class="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs">💪 Fitness</span>
+                                    </div>
+                                    <p class="text-sm text-gray-600">Morning walk in the park to start the day fresh</p>
+                                    <div class="flex items-center space-x-4 mt-2 text-xs text-gray-500">
+                                        <span class="flex items-center"><i class="far fa-clock mr-1"></i>Due: Tomorrow</span>
+                                        <span class="flex items-center"><i class="fas fa-walking mr-1"></i>Health goal</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button class="p-2 text-gray-400 hover:text-sky hover:bg-sky/10 rounded-lg transition-colors">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="p-2 text-gray-400 hover:text-red-500 hover:bg-red/10 rounded-lg transition-colors">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Completed Task -->
+                        <div class="p-6 hover:bg-gray-50/50 transition-colors group bg-gray-50/30">
+                            <div class="flex items-center space-x-4">
+                                <button class="w-6 h-6 bg-mint border-2 border-mint rounded-full flex items-center justify-center">
+                                    <i class="fas fa-check text-white text-sm"></i>
+                                </button>
+                                
+                                <div class="flex-1">
+                                    <div class="flex items-center space-x-2 mb-1">
+                                        <h4 class="font-medium text-gray-500 line-through">Read daily news and articles</h4>
+                                        <span class="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">🟢 Low</span>
+                                        <span class="px-2 py-1 bg-blue-100 text-blue-700 rounded-full text-xs">📚 Personal</span>
+                                    </div>
+                                    <p class="text-sm text-gray-400 line-through">Stay informed about current events and trends</p>
+                                    <div class="flex items-center space-x-4 mt-2 text-xs text-gray-400">
+                                        <span class="flex items-center"><i class="fas fa-check-circle mr-1"></i>Completed 2 hours ago</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button class="p-2 text-gray-400 hover:text-red-500 hover:bg-red/10 rounded-lg transition-colors">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Low Priority Task -->
+                        <div class="p-6 hover:bg-gray-50/50 transition-colors group">
+                            <div class="flex items-center space-x-4">
+                                <button class="w-6 h-6 border-2 border-green-300 rounded-full hover:bg-green-50 transition-colors flex items-center justify-center">
+                                    <i class="fas fa-check text-green-500 opacity-0 group-hover:opacity-100 transition-opacity text-sm"></i>
+                                </button>
+                                
+                                <div class="flex-1">
+                                    <div class="flex items-center space-x-2 mb-1">
+                                        <h4 class="font-medium text-gray-800">Organize home office desk</h4>
+                                        <span class="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">🟢 Low</span>
+                                        <span class="px-2 py-1 bg-yellow-100 text-yellow-700 rounded-full text-xs">🏠 Home</span>
+                                    </div>
+                                    <p class="text-sm text-gray-600">Clean up workspace and organize documents</p>
+                                    <div class="flex items-center space-x-4 mt-2 text-xs text-gray-500">
+                                        <span class="flex items-center"><i class="far fa-clock mr-1"></i>Due: This week</span>
+                                        <span class="flex items-center"><i class="fas fa-home mr-1"></i>Home improvement</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button class="p-2 text-gray-400 hover:text-sky hover:bg-sky/10 rounded-lg transition-colors">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="p-2 text-gray-400 hover:text-red-500 hover:bg-red/10 rounded-lg transition-colors">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- @END_MAP )) -->
+                    </div>
+                    
+                    <div class="p-4 bg-gray-50/50 text-center">
+                        <button class="text-sky hover:text-sky/80 font-medium text-sm transition-colors">
+                            <i class="fas fa-plus mr-1"></i>Load more tasks
+                        </button>
+                    </div>
+                </div>
+                <!-- @END_COMPONENT: TaskList -->
+            </div>
+            
+            <!-- Right Column: Stats & Motivation -->
+            <div class="space-y-6">
+                
+                <!-- @COMPONENT: ProgressTracker -->
+                <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                        <i class="fas fa-chart-line text-mint mr-2"></i>
+                        Today's Progress
+                    </h3>
+                    
+                    <div class="space-y-4">
+                        <div class="text-center">
+                            <div class="relative w-24 h-24 mx-auto mb-3">
+                                <div class="absolute inset-0 bg-gray-200 rounded-full"></div>
+                                <div class="absolute inset-0 bg-gradient-to-r from-mint to-sky rounded-full" style="clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 75%, 50% 50%)"></div>
+                                <div class="absolute inset-2 bg-white rounded-full flex items-center justify-center">
+                                    <span class="text-xl font-bold text-gray-800" data-bind="progressPercentage">75%</span>
+                                </div>
+                            </div>
+                            <p class="text-sm text-gray-600">Tasks Completed</p>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4 text-center">
+                            <div class="bg-mint/10 rounded-xl p-3">
+                                <div class="text-2xl font-bold text-mint" data-bind="completedTasksCount">12</div>
+                                <div class="text-xs text-gray-600">Completed</div>
+                            </div>
+                            <div class="bg-coral/10 rounded-xl p-3">
+                                <div class="text-2xl font-bold text-coral" data-bind="pendingTasksCount">4</div>
+                                <div class="text-xs text-gray-600">Remaining</div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-lemon/10 rounded-xl p-3">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm font-medium text-gray-700">Daily Goal</span>
+                                <span class="text-sm font-bold text-lemon/80" data-bind="dailyGoalProgress">12/15</span>
+                            </div>
+                            <div class="mt-2 bg-gray-200 rounded-full h-2">
+                                <div class="bg-gradient-to-r from-lemon to-coral h-2 rounded-full" style="width: 80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- @END_COMPONENT: ProgressTracker -->
+                
+                <!-- @COMPONENT: MotivationalQuote -->
+                <div class="bg-gradient-to-br from-lavender/20 via-coral/20 to-lemon/20 rounded-2xl shadow-lg p-6 border border-gray-100">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                        <i class="fas fa-quote-left text-lavender mr-2"></i>
+                        Daily Motivation
+                    </h3>
+                    
+                    <blockquote class="text-center">
+                        <p class="text-gray-700 italic mb-3" data-bind="motivationalQuote" data-mock="true">
+                            "The secret of getting ahead is getting started. Every small step counts! 🌟"
+                        </p>
+                        <cite class="text-sm text-gray-500" data-bind="quoteAuthor" data-mock="true">- Mark Twain</cite>
+                    </blockquote>
+                    
+                    <button data-event="click:fetchNewQuote" class="w-full mt-4 px-4 py-2 bg-white/50 hover:bg-white/80 rounded-xl transition-colors text-sm font-medium text-gray-700">
+                        <i class="fas fa-refresh mr-2"></i>New Quote
+                    </button>
+                </div>
+                <!-- @END_COMPONENT: MotivationalQuote -->
+                
+                <!-- @COMPONENT: WeeklyOverview -->
+                <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                        <i class="fas fa-calendar-week text-sky mr-2"></i>
+                        This Week
+                    </h3>
+                    
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between p-3 bg-mint/10 rounded-xl">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-3 h-3 bg-mint rounded-full"></div>
+                                <span class="font-medium text-gray-800">Monday</span>
+                            </div>
+                            <span class="text-sm text-mint font-medium">8/10 tasks</span>
+                        </div>
+                        
+                        <div class="flex items-center justify-between p-3 bg-sky/10 rounded-xl">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-3 h-3 bg-sky rounded-full"></div>
+                                <span class="font-medium text-gray-800">Tuesday</span>
+                            </div>
+                            <span class="text-sm text-sky font-medium">6/8 tasks</span>
+                        </div>
+                        
+                        <div class="flex items-center justify-between p-3 bg-coral/10 rounded-xl border-l-4 border-coral">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-3 h-3 bg-coral rounded-full animate-pulse"></div>
+                                <span class="font-medium text-gray-800">Today</span>
+                            </div>
+                            <span class="text-sm text-coral font-medium">12/16 tasks</span>
+                        </div>
+                        
+                        <div class="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-3 h-3 bg-gray-300 rounded-full"></div>
+                                <span class="font-medium text-gray-500">Upcoming</span>
+                            </div>
+                            <span class="text-sm text-gray-400">0/5 tasks</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- @END_COMPONENT: WeeklyOverview -->
+                
+                <!-- @COMPONENT: QuickActions -->
+                <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                        <i class="fas fa-bolt text-lemon mr-2"></i>
+                        Quick Actions
+                    </h3>
+                    
+                    <div class="grid grid-cols-2 gap-3">
+                        <button class="p-3 bg-mint/10 hover:bg-mint/20 rounded-xl text-center transition-colors group">
+                            <i class="fas fa-calendar-plus text-mint text-lg mb-1 group-hover:scale-110 transition-transform"></i>
+                            <div class="text-xs font-medium text-gray-700">Add Event</div>
+                        </button>
+                        
+                        <button class="p-3 bg-lavender/10 hover:bg-lavender/20 rounded-xl text-center transition-colors group">
+                            <i class="fas fa-bell text-lavender text-lg mb-1 group-hover:scale-110 transition-transform"></i>
+                            <div class="text-xs font-medium text-gray-700">Set Reminder</div>
+                        </button>
+                        
+                        <button class="p-3 bg-coral/10 hover:bg-coral/20 rounded-xl text-center transition-colors group">
+                            <i class="fas fa-flag text-coral text-lg mb-1 group-hover:scale-110 transition-transform"></i>
+                            <div class="text-xs font-medium text-gray-700">Mark Priority</div>
+                        </button>
+                        
+                        <button class="p-3 bg-sky/10 hover:bg-sky/20 rounded-xl text-center transition-colors group">
+                            <i class="fas fa-download text-sky text-lg mb-1 group-hover:scale-110 transition-transform"></i>
+                            <div class="text-xs font-medium text-gray-700">Export Tasks</div>
+                        </button>
+                    </div>
+                </div>
+                <!-- @END_COMPONENT: QuickActions -->
+            </div>
+        </div>
+    </main>
+
+    <!-- @COMPONENT: CelebrationModal -->
+    <div id="celebrationModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center hidden z-50" data-implementation="Show when all tasks completed">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-md mx-4 text-center animate-bounce-in">
+            <div class="text-6xl mb-4">🎉</div>
+            <h2 class="text-2xl font-bold text-gray-800 mb-2">Congratulations!</h2>
+            <p class="text-gray-600 mb-6">You've completed all your tasks for today! You're crushing it! 🌟</p>
+            <button class="px-6 py-3 bg-gradient-to-r from-mint to-sky text-white rounded-xl hover:shadow-lg transition-all font-medium">
+                Awesome! 🚀
+            </button>
+        </div>
+    </div>
+    <!-- @END_COMPONENT: CelebrationModal -->
+
+    <!-- @COMPONENT: NotificationToast -->
+    <div id="notificationToast" class="fixed top-4 right-4 bg-white rounded-xl shadow-lg p-4 border border-gray-200 hidden animate-slide-in" data-implementation="Show for task reminders">
+        <div class="flex items-center space-x-3">
+            <div class="w-3 h-3 bg-coral rounded-full animate-pulse"></div>
+            <div>
+                <div class="font-medium text-gray-800">Task Reminder</div>
+                <div class="text-sm text-gray-600" data-bind="reminderText">Complete project presentation is due soon!</div>
+            </div>
+            <button class="text-gray-400 hover:text-gray-600">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+    <!-- @END_COMPONENT: NotificationToast -->
+
+    <script>
+        // TODO: Implement business logic, API calls, and state management
+        
+        (function() {
+            // Mock data for demonstration
+            const mockTasks = [
+                {
+                    id: 1,
+                    title: "Complete project presentation",
+                    description: "Finalize slides and prepare demo for client meeting",
+                    category: "Work",
+                    priority: "High",
+                    dueDate: "2024-01-15",
+                    completed: false
+                },
+                {
+                    id: 2,
+                    title: "Go for a 30-minute walk",
+                    description: "Morning walk in the park to start the day fresh",
+                    category: "Fitness",
+                    priority: "Medium",
+                    dueDate: "2024-01-16",
+                    completed: false
+                },
+                {
+                    id: 3,
+                    title: "Read daily news and articles",
+                    description: "Stay informed about current events and trends",
+                    category: "Personal",
+                    priority: "Low",
+                    dueDate: "2024-01-15",
+                    completed: true
+                }
+            ];
+
+            // Mock motivational quotes
+            const motivationalQuotes = [
+                "The secret of getting ahead is getting started. Every small step counts! 🌟",
+                "You are capable of amazing things! Keep pushing forward! 💪",
+                "Progress, not perfection. Every task completed is a victory! 🎯",
+                "Believe in yourself and all that you are! You're doing great! ✨",
+                "One task at a time, one day at a time. You've got this! 🚀"
+            ];
+
+            // Basic interaction handlers (demo purposes only)
+            document.addEventListener('click', function(e) {
+                // Task completion toggle
+                if (e.target.closest('.w-6.h-6')) {
+                    const button = e.target.closest('.w-6.h-6');
+                    const taskContainer = button.closest('.p-6');
+                    
+                    // Toggle completed state visually
+                    if (button.classList.contains('bg-mint')) {
+                        button.classList.remove('bg-mint', 'border-mint');
+                        button.classList.add('border-gray-300');
+                        taskContainer.classList.remove('bg-gray-50/30');
+                        taskContainer.querySelector('h4').classList.remove('line-through', 'text-gray-500');
+                        taskContainer.querySelector('p').classList.remove('line-through', 'text-gray-400');
+                    } else {
+                        button.classList.add('bg-mint', 'border-mint');
+                        button.classList.remove('border-gray-300', 'border-red-300', 'border-yellow-300', 'border-green-300');
+                        taskContainer.classList.add('bg-gray-50/30');
+                        taskContainer.querySelector('h4').classList.add('line-through', 'text-gray-500');
+                        taskContainer.querySelector('p').classList.add('line-through', 'text-gray-400');
+                    }
+                }
+
+                // New quote button
+                if (e.target.closest('[data-event="click:fetchNewQuote"]')) {
+                    const quoteElement = document.querySelector('[data-bind="motivationalQuote"]');
+                    const randomQuote = motivationalQuotes[Math.floor(Math.random() * motivationalQuotes.length)];
+                    quoteElement.textContent = randomQuote;
+                }
+
+                // Filter buttons
+                if (e.target.closest('[data-event*="filter"]')) {
+                    const filterButtons = document.querySelectorAll('[data-event*="filter"]');
+                    filterButtons.forEach(btn => {
+                        btn.classList.remove('bg-mint', 'text-white');
+                        btn.classList.add('bg-gray-100', 'text-gray-700');
+                    });
+                    
+                    e.target.classList.remove('bg-gray-100', 'text-gray-700');
+                    e.target.classList.add('bg-mint', 'text-white');
+                }
+            });
+
+            // Demo notification
+            setTimeout(() => {
+                const toast = document.getElementById('notificationToast');
+                toast.classList.remove('hidden');
+                
+                setTimeout(() => {
+                    toast.classList.add('hidden');
+                }, 5000);
+            }, 3000);
+
+        })();
+    </script>
+</body>
+</html>
