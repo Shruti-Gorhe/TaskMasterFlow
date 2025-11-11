@@ -34,7 +34,7 @@ Built with **TypeScript**, **Vite**, **Tailwind CSS**, and **Drizzle ORM**, it c
 
 Follow the steps below to run **TaskMasterFlow** on your local system 👇
 
-### Step 1: Clone the Repository
+Step 1: Clone the Repository
 To get a local copy of the project:
 ```bash
 git clone https://github.com/Shruti-Gorhe/TaskMasterFlow.git
@@ -75,6 +75,9 @@ For the server:
 
 cd server
 npm run dev
+
+
+
 
 ###Step 6: Access the Application
 
